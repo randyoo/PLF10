@@ -570,7 +570,20 @@ sensor:   # Power monitoring sensors output to Home Assistant
     disabled_by_default: $disable_entities
     unit_of_measurement: ms
     icon: mdi:timer-outline
-
+    
+  - platform: template
+    id: apparent_power
+    name: $friendly_name Apparent Power
+    device_class: "apparent_power"
+    state_class: "measurement"
+    unit_of_measurement: "VA"
+    accuracy_decimals: 0
+    update_interval: 10s
+    icon: "mdi:flash"
+    lambda: |-
+      float voltage = id(voltage).state;
+      float current = id(current).state;
+      return voltage * current;
 
 # https://esphome.io/components/number/index.html
 # https://esphome.io/components/number/template.html
